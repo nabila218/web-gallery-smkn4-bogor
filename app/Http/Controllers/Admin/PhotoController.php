@@ -6,68 +6,123 @@ use App\Http\Controllers\Controller;
 use App\Models\Photo;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
+    /**
+     * Menampilkan semua galeri
+     */
     public function index()
     {
-        $photos = Photo::with('category')->latest()->paginate(10);
+        $photos = Photo::with('category')
+            ->latest()
+            ->paginate(6);
+
         return view('admin.photos.index', compact('photos'));
     }
 
+    /**
+     * Form tambah galeri
+     */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->get();
+
         return view('admin.photos.create', compact('categories'));
     }
 
+    /**
+     * Menyimpan galeri baru
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
-            'image' => 'required|image',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
-
-        $file = $request->file('image')->store('photos', 'public');
-
-        Photo::create([
-            'title' => $request->title,
-            'category_id' => $request->category_id,
-            'image' => $file,
-            'description' => $request->description,
-        ]);
-
-        return redirect()->route('admin.photos.index')->with('success', 'Foto berhasil ditambahkan!');
-    }
-
-    public function edit(Photo $photo)
-    {
-        $categories = Category::all();
-        return view('admin.photos.edit', compact('photo', 'categories'));
-    }
-
-    public function update(Request $request, Photo $photo)
-    {
-        $request->validate([
-            'title' => 'required',
-            'category_id' => 'required',
-        ]);
-
-        $data = $request->only(['title', 'category_id', 'description']);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('photos', 'public');
+            $validated['image'] = $request->file('image')
+                ->store('photos', 'public');
         }
 
-        $photo->update($data);
+        $validated['user_id'] = auth()->id();
 
-        return redirect()->route('admin.photos.index')->with('success', 'Foto berhasil diupdate!');
+        Photo::create($validated);
+
+        return redirect()
+            ->route('admin.photos.index')
+            ->with('success', 'Galeri berhasil ditambahkan.');
     }
 
+    /**
+     * Menampilkan detail galeri
+     */
+    public function show(Photo $photo)
+    {
+        $photo->load('category');
+
+        return view('admin.photos.show', compact('photo'));
+    }
+
+    /**
+     * Form edit galeri
+     */
+    public function edit(Photo $photo)
+    {
+        $categories = Category::orderBy('name')->get();
+
+        return view(
+            'admin.photos.edit',
+            compact('photo', 'categories')
+        );
+    }
+
+    /**
+     * Memperbarui galeri
+     */
+    public function update(Request $request, Photo $photo)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            if ($photo->image) {
+                Storage::disk('public')->delete($photo->image);
+            }
+
+            $validated['image'] = $request->file('image')
+                ->store('photos', 'public');
+        }
+
+        $photo->update($validated);
+
+        return redirect()
+            ->route('admin.photos.index')
+            ->with('success', 'Galeri berhasil diperbarui.');
+    }
+
+    /**
+     * Menghapus galeri
+     */
     public function destroy(Photo $photo)
     {
+        if ($photo->image) {
+            Storage::disk('public')->delete($photo->image);
+        }
+
         $photo->delete();
-        return back()->with('success', 'Foto berhasil dihapus!');
+
+        return redirect()
+            ->route('admin.photos.index')
+            ->with('success', 'Galeri berhasil dihapus.');
     }
 }

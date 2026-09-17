@@ -2,26 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Photo; // Menghubungkan ke Model Photo
-use App\Models\Page;  // Menghubungkan ke Model Page
+use App\Models\Contact;
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Setting;
 
 class HomeController extends Controller
 {
-    /**
-     * Tampilkan halaman utama aplikasi (Web Gallery).
-     */
     public function index()
     {
-        // Ambil 8 foto terbaru dari database, diurutkan dari yang terbaru
-        // paginate(8) artinya batasi 8 foto per halaman
-        $photos = Photo::latest()->paginate(8);
+        $contact = Contact::first();
+        $setting = Setting::first();
 
-        // Ambil SEMUA data halaman statis (Profil, Visi Misi, dll)
-        $pages = Page::all();
+        $articles = Article::with('category')
+            ->whereRaw('LOWER(status) = ?', ['publish'])
+            ->latest()
+            ->take(3)
+            ->get();
 
-        // Kirim data $photos dan $pages ke view 'home'
-        // 'compact' adalah cara singkat untuk membuat ['photos' => $photos, 'pages' => $pages]
-        return view('home', compact('photos', 'pages'));
+        $galleryCategories = Category::with(['photos' => function ($query) {
+            $query->latest();
+        }])
+        ->whereHas('photos')
+        ->orderBy('name')
+        ->get();
+
+        return view('home', compact(
+            'contact',
+            'articles',
+            'galleryCategories',
+            'setting'
+        ));
     }
 }

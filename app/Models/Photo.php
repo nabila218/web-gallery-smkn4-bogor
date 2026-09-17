@@ -10,7 +10,8 @@ class Photo extends Model
         'title',
         'category_id',
         'image',
-        'description'
+        'description',
+        'user_id',
     ];
 
     public function category()
