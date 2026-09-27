@@ -117,7 +117,7 @@ class ProgramController extends Controller
             'tkro' => [
 
                 'title' => 'Teknik Otomotif',
-                'short_title' => 'TO',
+                'short_title' => 'TKRO',
 
                 'logo' => 'storage/jurusan/tkro.PNG',
 

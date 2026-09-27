@@ -923,27 +923,6 @@
                         <div class="settings-form-group">
 
                             <label
-                                for="npsn"
-                                class="settings-label"
-                            >
-                                NPSN
-                            </label>
-
-                            <input
-                                type="text"
-                                id="npsn"
-                                name="npsn"
-                                class="settings-input"
-                                value="{{ old('npsn', $setting?->npsn) }}"
-                                placeholder="Masukkan NPSN"
-                            >
-
-                        </div>
-
-
-                        <div class="settings-form-group">
-
-                            <label
                                 for="accreditation"
                                 class="settings-label"
                             >

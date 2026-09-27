@@ -31,7 +31,6 @@ class SettingController extends Controller
             // =============================
             'school_name' => 'nullable|string|max:255',
             'motto' => 'nullable|string|max:255',
-            'npsn' => 'nullable|string|max:255',
             'accreditation' => 'nullable|string|max:255',
             'founded_year' => 'nullable|integer|min:1900|max:2100',
             'student_count' => 'nullable|string|max:255',
