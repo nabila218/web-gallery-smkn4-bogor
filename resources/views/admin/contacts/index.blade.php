@@ -25,7 +25,7 @@
         justify-content: space-between;
         align-items: flex-start;
 
-        margin-bottom: 26px;
+        margin-bottom: 24px;
     }
 
     .contact-header-left h1 {
@@ -33,8 +33,9 @@
 
         color: #123d91;
 
-        font-size: 27px;
+        font-size: 26px;
         font-weight: 700;
+        line-height: 1.2;
     }
 
     .contact-breadcrumb {
@@ -43,12 +44,18 @@
 
         gap: 6px;
 
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 600;
     }
 
     .contact-breadcrumb .home {
         color: #0759d1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .contact-breadcrumb .home:hover {
+        text-decoration: underline;
     }
 
     .contact-breadcrumb .separator,
@@ -410,9 +417,12 @@
 
             <div class="contact-breadcrumb">
 
-                <span class="home">
+                <a
+                    href="{{ route('admin.dashboard') }}"
+                    class="home"
+                >
                     Dashboard
-                </span>
+                </a>
 
                 <span class="separator">
                     /

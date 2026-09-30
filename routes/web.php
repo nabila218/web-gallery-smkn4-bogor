@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\MessageController;
 
 // ADMIN CONTROLLERS
 use App\Http\Controllers\Admin\DashboardController;
@@ -17,7 +18,7 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\ProfileController;
-
+use App\Http\Controllers\Admin\MessageController as AdminMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +48,9 @@ Route::get('/galeri', [GalleryController::class, 'index'])
 
 Route::get('/galeri/{slug}', [GalleryController::class, 'category'])
     ->name('gallery.category');
+
+Route::post('/pesan', [MessageController::class, 'store'])
+    ->name('message.store');
 /*
 |--------------------------------------------------------------------------
 | AUTH
@@ -124,6 +128,12 @@ Route::middleware(['auth', 'admin'])
 
         Route::put('/contacts', [ContactController::class, 'update'])
             ->name('contacts.update');
+
+        Route::get('/messages', [AdminMessageController::class, 'index'])
+            ->name('messages.index');
+            
+        Route::delete('/messages/{message}', [AdminMessageController::class, 'destroy']) 
+            ->name('messages.destroy');
 
 
         /*

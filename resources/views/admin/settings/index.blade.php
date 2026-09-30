@@ -22,7 +22,7 @@
     ========================================================= */
 
     .settings-header {
-        margin-bottom: 32px;
+        margin-bottom: 24px;
     }
 
     .settings-header h1 {
@@ -30,10 +30,10 @@
 
         color: #123d91;
 
-        font-size: 30px;
+        font-size: 26px;
         font-weight: 700;
 
-        line-height: 1.15;
+        line-height: 1.2;
     }
 
     .settings-breadcrumb {
@@ -42,7 +42,7 @@
 
         gap: 6px;
 
-        font-size: 17px;
+        font-size: 14px;
         font-weight: 600;
 
         line-height: 1.2;
@@ -50,6 +50,12 @@
 
     .settings-breadcrumb .home {
         color: #0759d1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .settings-breadcrumb .home:hover {
+        text-decoration: underline;
     }
 
     .settings-breadcrumb .separator,
@@ -116,7 +122,7 @@
 
         font-family: inherit;
 
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
 
         line-height: 1;
@@ -189,7 +195,7 @@
 
         color: #111111;
 
-        font-size: 20px;
+        font-size: 17px;
         font-weight: 700;
 
         line-height: 1.2;
@@ -785,9 +791,12 @@
 
         <div class="settings-breadcrumb">
 
-            <span class="home">
-                Dashboard
-            </span>
+            <a
+                    href="{{ route('admin.dashboard') }}"
+                    class="home"
+                >
+                    Dashboard
+                </a>
 
             <span class="separator">
                 /

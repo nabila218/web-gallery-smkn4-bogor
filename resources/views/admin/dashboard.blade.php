@@ -29,7 +29,7 @@
     }
 
     .dashboard-title {
-        font-size: 27px;
+        font-size: 26px;
         font-weight: 700;
 
         color: #123d91;
@@ -65,6 +65,75 @@
         opacity: 0.75;
     }
 
+
+    /* =========================================================
+    ADMIN HEADER ACTIONS
+    ========================================================= */
+
+    .admin-header-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    /* =========================================================
+    PESAN PENGUNJUNG
+    ========================================================= */
+
+.admin-message {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: #123d91;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: background .2s ease, color .2s ease;
+}
+
+    .admin-message-badge {
+    position: absolute;
+
+    top: -4px;
+    right: -4px;
+
+    min-width: 16px;
+    height: 16px;
+
+    padding: 0 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #e53935;
+    color: #ffffff;
+
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+}
+    .admin-message i {
+        font-size: 20px;
+    }
+
+    .admin-message:hover {
+    background: #f3f4f6;
+    color: #111827;
+    }
 
     /* =========================================================
        FOTO / ICON ADMINISTRATOR
@@ -553,59 +622,71 @@
         </h1>
 
 
-        {{-- =================================================
-             ADMINISTRATOR
-             KLIK → PROFILE
-        ================================================== --}}
+ {{-- PESAN PENGUNJUNG --}}
 
-        <a
-            href="{{ route('admin.profile') }}"
-            class="admin-name"
-        >
+<div class="admin-header-actions">
 
-            <div class="admin-icon">
+    <a
+        href="{{ route('admin.messages.index') }}"
+        class="admin-message"
+        title="Pesan Pengunjung"
+    >
+        <i class="bx bxs-message-dots"></i>
 
-                {{-- JIKA SUDAH ADA FOTO PROFIL --}}
-                @if(auth()->user()->profile_photo)
-
-                    <img
-                        src="{{ asset('storage/' . auth()->user()->profile_photo) }}"
-                        alt="Foto Profil"
-                    >
-
-                {{-- JIKA BELUM ADA FOTO --}}
-                @else
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-
-                        <circle
-                            cx="12"
-                            cy="8"
-                            r="4"
-                        ></circle>
-
-                        <path
-                            d="M4 21c0-4 3.6-7 8-7s8 3 8 7"
-                        ></path>
-
-                    </svg>
-
-                @endif
-
-            </div>
-
-            <span>
-                Administrator
+        @if($unreadMessageCount > 0)
+            <span class="admin-message-badge">
+                {{ $unreadMessageCount }}
             </span>
+        @endif
+    </a>
 
-        </a>
+    <a
+        href="{{ route('admin.profile') }}"
+        class="admin-name"
+    >
+
+        <div class="admin-icon">
+
+            @if(auth()->user()->profile_photo)
+
+                <img
+                    src="{{ asset('storage/' . auth()->user()->profile_photo) }}"
+                    alt="Foto Profil"
+                >
+
+            @else
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="4"
+                    ></circle>
+
+                    <path
+                        d="M4 21c0-4 3.6-7 8-7s8 3 8 7"
+                    ></path>
+
+                </svg>
+
+            @endif
+
+        </div>
+
+        <span>
+            Administrator
+        </span>
+
+    </a>
+
+</div>
 
     </div>
 

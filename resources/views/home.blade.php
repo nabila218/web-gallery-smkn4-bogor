@@ -335,7 +335,7 @@
 
 .principal-photo {
     width: 100%;
-    height: 340px;
+    height: 360px;
 
     display: flex;
     align-items: center;
@@ -1188,6 +1188,132 @@
 
 
 /* =========================
+   FORM PESAN PENGUNJUNG
+========================= */
+
+.contact-message {
+    width: 100%;
+    margin-top: 38px;
+    padding: 28px 30px;
+
+    background: #ffffff;
+
+    border: 1px solid #dbe7f7;
+    border-radius: 8px;
+
+    box-sizing: border-box;
+}
+
+.contact-message h3 {
+    margin: 0 0 8px;
+
+    color: #123d91;
+
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.contact-message-subtitle {
+    margin: 0 0 22px;
+
+    color: #666666;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.message-form {
+    display: grid;
+    gap: 16px;
+}
+
+.message-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.message-form-group label {
+    color: #333333;
+
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.message-form-group input,
+.message-form-group textarea {
+    width: 100%;
+    padding: 11px 13px;
+
+    border: 1px solid #d5dce8;
+    border-radius: 6px;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-family: inherit;
+    font-size: 13px;
+
+    box-sizing: border-box;
+    outline: none;
+}
+
+.message-form-group input:focus,
+.message-form-group textarea:focus {
+    border-color: #0645c0;
+}
+
+.message-form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.message-submit {
+    width: fit-content;
+
+    padding: 11px 22px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #0645c0;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.message-submit:hover {
+    background: #123d91;
+}
+
+.message-success {
+    margin-bottom: 20px;
+    padding: 11px 14px;
+
+    border-radius: 6px;
+
+    background: #eef7ee;
+    color: #28743c;
+
+    font-size: 13px;
+}
+
+.message-error {
+    margin: 0;
+
+    color: #c0392b;
+
+    font-size: 12px;
+}
+
+
+/* =========================
    CONTACT ITEM
 ========================= */
 
@@ -1834,7 +1960,7 @@
             <div class="principal-photo">
 
                 <img
-                    src="{{ asset('storage/profile/kepala-sekolah.PNG') }}"
+                    src="{{ asset('storage/profile/kepala_sekolah.PNG') }}"
                     alt="Kepala Sekolah SMK Negeri 4 Bogor"
                 >
 
@@ -2554,6 +2680,100 @@
                 </div>
 
             </div>
+
+        </div>
+
+
+        {{-- =========================
+             FORM PESAN PENGUNJUNG
+        ========================== --}}
+
+        <div class="contact-message">
+
+            <h3>
+                Kirim Pesan
+            </h3>
+
+            <p class="contact-message-subtitle">
+                Sampaikan pertanyaan, saran, atau pesan Anda kepada kami.
+            </p>
+
+            @if (session('success'))
+                <div class="message-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="message-error">
+                    Terdapat kesalahan pada data yang dikirim.
+                </div>
+            @endif
+
+            <form
+                action="{{ route('message.store') }}"
+                method="POST"
+                class="message-form"
+            >
+
+                @csrf
+
+                <div class="message-form-group">
+
+                    <label for="name">
+                        Nama
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value="{{ old('name') }}"
+                        placeholder="Masukkan nama Anda"
+                        required
+                    >
+
+                </div>
+
+                <div class="message-form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value="{{ old('email') }}"
+                        placeholder="Masukkan email Anda"
+                    >
+
+                </div>
+
+                <div class="message-form-group">
+
+                    <label for="message">
+                        Pesan
+                    </label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        placeholder="Tulis pesan Anda"
+                        required
+                    >{{ old('message') }}</textarea>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="message-submit"
+                >
+                    Kirim Pesan
+                </button>
+
+            </form>
 
         </div>
 

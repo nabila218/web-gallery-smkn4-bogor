@@ -79,20 +79,26 @@
        IMAGE
     ========================= */
 
-    .detail-image {
-        width: 100%;
-        height: 400px;
-        overflow: hidden;
-        border-radius: 6px;
-        margin-bottom: 32px;
-    }
+.detail-image {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 6px;
+    margin-bottom: 32px;
 
-    .detail-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
+    background: #0156C2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
 
 
     /* =========================
@@ -234,9 +240,7 @@
             @if ($page->slug === 'sambutan-kepala-sekolah')
 
                 <img
-                    src="{{ $setting?->principal_image
-                        ? asset('storage/' . $setting->principal_image)
-                        : asset('storage/profile/kepala-sekolah.PNG') }}"
+                    src="{{ asset('storage/profile/kepala-sekolah.PNG') }}"
                     alt="{{ $setting?->principal_name ?? $page->title }}"
                 >
 

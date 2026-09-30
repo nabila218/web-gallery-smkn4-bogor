@@ -29,12 +29,13 @@
     }
 
     .article-header-left h1 {
-        margin: 0 0 10px;
+    margin: 0 0 10px;
 
-        font-size: 27px;
-        font-weight: 700;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
 
-        color: #123d91;
+    color: #123d91;
     }
 
 
@@ -43,17 +44,23 @@
     ========================================================= */
 
     .breadcrumb {
-        display: flex;
-        align-items: center;
+    display: flex;
+    align-items: center;
 
-        gap: 6px;
+    gap: 6px;
 
-        font-size: 15px;
-        font-weight: 600;
+    font-size: 14px;
+    font-weight: 600;
     }
 
     .breadcrumb .home {
         color: #0759d1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .breadcrumb .home:hover {
+        text-decoration: underline;
     }
 
     .breadcrumb .separator,
@@ -80,7 +87,7 @@
         background: #0e57d8;
         color: white;
 
-        border-radius: 6px;
+        border-radius: 7px;
 
         text-decoration: none;
 
@@ -564,19 +571,22 @@
 
             <div class="breadcrumb">
 
-                <span class="home">
-                    Dashboard
-                </span>
+            <a
+                href="{{ route('admin.dashboard') }}"
+                class="home"
+            >
+                Dashboard
+            </a>
 
-                <span class="separator">
-                    /
-                </span>
+            <span class="separator">
+                /
+            </span>
 
-                <span class="current">
-                    Artikel
-                </span>
+            <span class="current">
+                Artikel
+            </span>
 
-            </div>
+        </div>
 
         </div>
 
@@ -668,9 +678,7 @@
                             {{-- NO --}}
 
                             <td class="article-number">
-
                                 {{ $articles->firstItem() + $loop->index }}
-
                             </td>
 
 

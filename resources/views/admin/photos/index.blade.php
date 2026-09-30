@@ -22,19 +22,17 @@
     ========================================================= */
 
     .gallery-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-
-        margin-bottom: 26px;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
 
     .gallery-header-left h1 {
         margin: 0 0 10px;
-
-        font-size: 27px;
+        font-size: 26px;
         font-weight: 700;
-
+        line-height: 1.2;
         color: #123d91;
     }
 
@@ -44,19 +42,22 @@
     ========================================================= */
 
     .gallery-breadcrumb {
-        display: flex;
-        align-items: center;
-
-        gap: 6px;
-
-        margin: 0;
-
-        font-size: 15px;
-        font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
     }
 
     .gallery-breadcrumb .home {
         color: #0759d1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .gallery-breadcrumb .home:hover {
+        text-decoration: underline;
     }
 
     .gallery-breadcrumb .separator,
@@ -443,9 +444,12 @@
 
             <div class="gallery-breadcrumb">
 
-                <span class="home">
+                <a
+                    href="{{ route('admin.dashboard') }}"
+                    class="home"
+                >
                     Dashboard
-                </span>
+                </a>
 
                 <span class="separator">
                     /

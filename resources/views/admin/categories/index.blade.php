@@ -10,10 +10,10 @@
     ================================================== */
 
     .category-page {
-        width: 100%;
+       width: 100%;
         max-width: 930px;
         margin: 0 auto;
-    }
+        }
 
 
     /* ==================================================
@@ -43,13 +43,19 @@
         align-items: center;
 
         gap: 6px;
-
+        
         font-size: 14px;
         font-weight: 600;
     }
 
     .category-breadcrumb .home {
         color: #0759d1;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .category-breadcrumb .home:hover {
+        text-decoration: underline;
     }
 
     .category-breadcrumb .separator,
@@ -555,9 +561,12 @@
 
             <div class="category-breadcrumb">
 
-                <span class="home">
+                <a
+                    href="{{ route('admin.dashboard') }}"
+                    class="home"
+                >
                     Dashboard
-                </span>
+                </a>
 
                 <span class="separator">
                     /
